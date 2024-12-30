@@ -1,0 +1,2 @@
+import { config } from 'aws-sdk';
+config.update({ region: process.env.AWS_REGION });
