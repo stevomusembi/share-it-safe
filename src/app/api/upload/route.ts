@@ -14,7 +14,11 @@ export async function POST(request: Request) {
         }
 
         const s3Client = new S3Client({
-            region: process.env.AWS_REGION,
+            region: process.env.REGION,
+            credentials: {
+                accessKeyId: process.env.ACCESS_KEY_ID!,
+                secretAccessKey: process.env.SECRET_ACCESS_KEY!,
+            },
         });
 
         const buffer = Buffer.from(await file.arrayBuffer());
@@ -22,14 +26,15 @@ export async function POST(request: Request) {
 
         // Upload the file
         const uploadCommand = new PutObjectCommand({
-            Bucket: process.env.AWS_BUCKET_NAME,
+            Bucket: process.env.BUCKET_NAME,
             Key: fileName,
             Body: buffer,
             ContentType: file.type,
         });
+        console.log("Uploading file:", uploadCommand);
 
         await s3Client.send(uploadCommand);
-        
+
         return NextResponse.json(
             { message: "File uploaded successfully", key: fileName },
             { status: 200 }
