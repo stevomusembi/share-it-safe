@@ -1,5 +1,4 @@
-import { S3Client, PutObjectCommand, GetObjectCommand } from "@aws-sdk/client-s3";
-import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
+import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
 import { NextResponse } from 'next/server';
 
 export async function POST(request: Request) {
@@ -30,22 +29,11 @@ export async function POST(request: Request) {
         });
 
         await s3Client.send(uploadCommand);
-
-        // Create a presigned URL that expires in 24 hours
-        const getObjectCommand = new GetObjectCommand({
-            Bucket: process.env.AWS_BUCKET_NAME,
-            Key: fileName,
-        });
-
-        const presignedUrl = await getSignedUrl(s3Client, getObjectCommand, {
-            expiresIn: 24 * 60 * 60 // 24 hours in seconds
-        });
-
-        return NextResponse.json({
-            success: true,
-            url: presignedUrl,
-            expiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString()
-        });
+        
+        return NextResponse.json(
+            { message: "File uploaded successfully", key: fileName },
+            { status: 200 }
+        );
 
     } catch (error) {
         console.error('Upload error:', error);
