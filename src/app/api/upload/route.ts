@@ -25,6 +25,7 @@ export async function POST(request: Request) {
         const fileName = `${Date.now()}-${file.name}`;
 
         console.log("THE BUCKET NAME IS ==>", process.env.BUCKET_NAME);
+        console.log("the credentials are ==> ",s3Client);
 
         // Upload the file
         const uploadCommand = new PutObjectCommand({
