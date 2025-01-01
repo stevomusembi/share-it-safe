@@ -6,7 +6,7 @@ frontend:
         - npm ci --cache .npm --prefer-offline
     build:
       commands:
-        - env | grep -e ACCESS_KEY_ID -e BUCKET_NAME -e SECRET_ACCES_KEY -e REGION >> .env.production
+        - env | grep -e ACCESS_KEY_ID -e BUCKET_NAME -e SECRET_ACCESS_KEY -e REGION >> .env.production
         - npm run build
   artifacts:
     baseDirectory: .next
