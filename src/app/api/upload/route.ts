@@ -24,10 +24,11 @@ export async function POST(request: Request) {
         const buffer = Buffer.from(await file.arrayBuffer());
         const fileName = `${Date.now()}-${file.name}`;
 
+        console.log("THE BUCKET NAME IS ==>", process.env.BUCKET_NAME);
 
         // Upload the file
         const uploadCommand = new PutObjectCommand({
-            Bucket: 'stevosbucket',
+            Bucket: process.env.BUCKET_NAME,
             Key: fileName,
             Body: buffer,
             ContentType: file.type,
