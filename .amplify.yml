@@ -6,11 +6,7 @@ frontend:
         - npm ci --cache .npm --prefer-offline
     build:
       commands:
-        - echo "ACCESS_KEY_ID=$ACCESS_KEY_ID" >> .env.production
-        - echo "BUCKET_NAME=$BUCKET_NAME" >> .env.production
-        - echo "SECRET_ACCESS_KEY=$SECRET_ACCESS_KEY" >> .env.production
-        - echo "REGION=$REGION" >> .env.production
-        - env | grep -e NEXT_PUBLIC_ >> .env.production
+        - env | grep -e ACCESS_KEY_ID -e BUCKET_NAME -e SECRET_ACCES_KEY -e REGION >> .env.production
         - npm run build
   artifacts:
     baseDirectory: .next
