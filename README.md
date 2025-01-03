@@ -15,22 +15,45 @@ bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+You will need to create a .env file at the root of the project. 
+Add the following variables from your personal AWS acount.
+1. AWS secret_Access_Key
+2. AWS Access_Key_Id
+3. AWS Region
+4. AWS bucket_Name
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Make sure to save the variables names in a similar way to how they are used in the code.<br>
+On your AWS account you will need to create a lamda function that generrates pre-signed URLs for the file in S3.<br>
+Create a AWS api gateway that will trigger the lamda function to generate the URL. <br>
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+>So after a user uploads a file to the bucket successfully we call the API gateway with a POST request with the file name, which in turn passes the file name to the
+lamda which generates a unique URL and the API gateway responds with this URL and we display it on our web app.
 
-## Learn More
+**Make sure to set up the valid permissons on the S3 bucket to allow lamda access to getObjects from the bucket.**
+**Also dont forget to add API gateway as the trigger for the lamda function**
 
-To learn more about Next.js, take a look at the following resources:
+I deployed the web app on AWS Amplify. <br>
+First create a new app on AWS Amplify, <br> Then link you github and select the repo with this project, follow the next steps and add the evironment variables. <br>
+Deployment will be done and it will also set up CI/CD for you as when you make changes to the main branch it triggers a new deployment.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-## Deploy on Vercel
+## About
+This is a Nextjs web app that allows a user to securely upload a file to amazon S3 bucket. The application generates unique, time-limited links, ensuring that only authorized users with the link can access the uploaded files for a specified duration.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Technologies and Skills:
+<ul>
+<li> Next.js: Utilized for building a dynamic, server-rendered React application, ensuring a seamless user experience</li>
+<li> AWS Lambda: Implemented serverless functions to handle backend logic, providing scalability and cost-efficiency.</li>
+<li> AWS API Gateway: Configured to create, publish, maintain, monitor, and secure APIs at any scale. </li>
+<li> Amazon S3: Leveraged for secure, scalable, and durable file storage.</li>
+<li> AWS Amplify: Used for hosting and deploying the application, ensuring continuous integration and delivery.</li>
+</ul>
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+### Key Features:
+Secure File Upload: Users can upload files securely to Amazon S3.
+Time-Limited Links: Automatically generates unique, time-limited links for file sharing.
+Access Control: Ensures only authorized users with the link can access the files within the specified duration.
+
+>This project showcases my ability to integrate various AWS services to build a secure, scalable, and user-friendly web application.
